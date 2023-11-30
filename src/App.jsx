@@ -1,49 +1,58 @@
 import { useState } from 'react';
-import Header from './Header.jsx';
-
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import './App.css';
+import Header from './Header.jsx';
+import ResetAlert from './ResetAlert.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
-  const [username, setUsername] = useState('user');
+  const defaultEmail = 'anonymous';
+
+  const [email, setEmail] = useState(defaultEmail);
+  const [showAlert, setShowAlert] = useState(false);
 
   function handleFormSubmitted(event) {
     event.preventDefault();
-    console.log('submitted');
+    event.target.reset();
+    setShowAlert(true);
   }
 
-  function handleUsernameTyped(event) {
+  function handleEmailInput(event) {
     if (event.target.value.length > 0) {
-      setUsername(event.target.value);
+      setEmail(event.target.value);
     } else {
-      setUsername('user');
+      setEmail(defaultEmail);
     }
   }
 
   return (
-    <div>
-      <Header user={username} />
-      <form onSubmit={handleFormSubmitted}>
-        <label htmlFor="name">Name</label>
+    <Container>
+      <Header user={email} />
 
-        <input id="name" name="name" type="text" onInput={handleUsernameTyped} />
-        <br />
-        <label htmlFor="dob">Date of Birth</label>
-        <input type="date" name="dob" id="dob" />
-        <br />
-        <input type="submit" />
-      </form>
-      <Container>
-        <Form>
-          <Form.Group controlId="bootstrapName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control type="text" onInput={handleUsernameTyped} />
-          </Form.Group>
-        </Form>
-      </Container>
-    </div>
+      <Form onSubmit={handleFormSubmitted}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" onChange={handleEmailInput} />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check type="checkbox" label="Receive notifications?" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+      <ResetAlert show={showAlert} onClose={() => setShowAlert(false)} email={email} />
+    </Container>
   )
 }
 
