@@ -14,17 +14,22 @@ function App() {
 
   function handleComplete(info) {
     console.log(info);
-    setShowAlert(true) 
+    setShowAlert(true)
   }
 
   return (
     <Container>
-      <ReactiveForm 
-        email={email} 
-        setEmail={setEmail} 
-        defaultEmail={defaultEmail} 
+      <header>
+        <h1>Fun with Forms</h1>
+        <p>The classic example is a login form</p>
+      </header>
+      <ReactiveForm
+        email={email}
+        setEmail={setEmail}
+        defaultEmail={defaultEmail}
         onComplete={handleComplete} />
       <ResetAlert show={showAlert} onClose={() => setShowAlert(false)} email={email} />
+      <p>But you can use form inputs on their own too</p>
       <NumberFilter />
     </Container>
   )

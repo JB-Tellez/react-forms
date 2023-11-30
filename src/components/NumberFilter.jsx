@@ -30,9 +30,10 @@ export default function NumberFilter() {
   }
 
   return (
-    <>
+    <div>
+      <h2>Number Filter</h2>
       <OptionSelecter onSelect={handleSelect} />
       <NumberList numbers={numerals} />
-    </>
+    </div>
   )
 }
